@@ -13,13 +13,14 @@ def setup():
     gpio.setmode(gpio.BCM)
     time.sleep(SETUP_DELAY)
 
-    print("Setup")
 
 def loop():
-    print("Loop")
+    pass
 
 
 def main():
     setup()
     while True:
         loop()
+
+main()
