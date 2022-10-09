@@ -1,6 +1,3 @@
-from utils.pin import Pin
-
 SETUP_DELAY = 0.5
 LOCK_COUNT = 4
-LOCK_SELECTORS = [Pin.LOCK_SELECTOR_0, Pin.LOCK_SELECTOR_1]
 LOCK_UPTIME = 3
