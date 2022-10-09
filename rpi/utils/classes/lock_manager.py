@@ -39,7 +39,7 @@ class LockManager:
             gpio.output(pin, gpio.LOW)
             time.sleep(SETUP_DELAY)
 
-    def toggle(lock_id):
+    def toggle(self, lock_id):
         assert lock_id >= 0 and lock_id < self.lock_count
 
         pins = (
