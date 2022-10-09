@@ -1,5 +1,12 @@
-import RPi.GPIO as gpio
+
 import time
+
+try:
+    import RPi.GPIO as gpio
+except:
+    import Mock.GPIO as gpio
+
+from utils.constants import SETUP_DELAY
 
 
 def setup():
@@ -7,7 +14,6 @@ def setup():
     time.sleep(SETUP_DELAY)
 
     print("Setup")
-
 
 def loop():
     print("Loop")
