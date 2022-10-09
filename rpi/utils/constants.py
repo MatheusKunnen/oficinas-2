@@ -1,4 +1,4 @@
-from pin import Pin
+from utils.pin import Pin
 
 SETUP_DELAY = 0.5
 LOCK_COUNT = 4
