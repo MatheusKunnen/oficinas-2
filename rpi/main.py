@@ -1,10 +1,15 @@
-import RPi.GPIO as gpio
+
 import time
 
+try:
+    import RPi.GPIO as gpio
+except:
+    import Mock.GPIO as gpio
+
+from utils.constants import SETUP_DELAY
 from utils.classes.lock_manager import LockManager
 
 lock_manager = LockManager()
-
 
 def setup():
     gpio.setmode(gpio.BCM)
@@ -12,14 +17,14 @@ def setup():
 
     lock_manager.setup()
 
-    print("Setup")
-
 
 def loop():
-    print("Loop")
+    pass
 
 
 def main():
     setup()
     while True:
         loop()
+
+main()

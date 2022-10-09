@@ -1,7 +1,10 @@
 import math
 import time
 
-import RPi.GPIO as gpio
+try:
+    import RPi.GPIO as gpio
+except:
+    import Mock.GPIO as gpio
 
 from constants import SETUP_DELAY
 from constants import LOCK_COUNT
