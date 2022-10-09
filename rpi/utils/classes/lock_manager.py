@@ -20,7 +20,7 @@ class LockManager:
         lock_count=LOCK_COUNT,
         toggle_delay=LOCK_UPTIME,
     ):
-        assert lock_count < 2 ** len(selector_pins)
+        assert lock_count <= 2 ** len(selector_pins)
 
         self.selector_pins = selector_pins
         self.enable_pin = enable_pin
