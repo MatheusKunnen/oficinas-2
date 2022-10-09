@@ -1,4 +1,3 @@
-
 import time
 
 try:
@@ -22,5 +21,6 @@ def main():
     setup()
     while True:
         loop()
+
 
 main()
