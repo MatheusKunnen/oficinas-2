@@ -50,7 +50,7 @@ class LockManager:
         for (pin, value) in zip(self.selector_pins, pins):
             gpio.output(pin, value)
         gpio.output(self.enable_pin, gpio.HIGH)
-
         time.sleep(self.toggle_delay)
 
         gpio.output(self.enable_pin, gpio.LOW)
+        time.sleep(SETUP_DELAY)
