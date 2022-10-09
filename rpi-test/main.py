@@ -1,4 +1,11 @@
+import RPi.GPIO as gpio
+import time
+
+
 def setup():
+    gpio.setmode(gpio.BCM)
+    time.sleep(SETUP_DELAY)
+
     print("Setup")
 
 
