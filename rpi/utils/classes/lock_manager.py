@@ -6,17 +6,16 @@ try:
 except:
     import Mock.GPIO as gpio
 
-from constants import SETUP_DELAY
-from constants import LOCK_COUNT
-from constants import LOCK_SELECTORS
-from constants import LOCK_UPTIME
-from pin import Pin
+from utils.constants import SETUP_DELAY
+from utils.constants import LOCK_COUNT
+from utils.constants import LOCK_UPTIME
+from utils.pin import Pin
 
 
 class LockManager:
     def __init__(
         self,
-        selector_pins=[Pin.LOCK_SELECTOR_1, PIN.LOCK_SELECTOR_0],
+        selector_pins=[Pin.LOCK_SELECTOR_1, Pin.LOCK_SELECTOR_0],
         enable_pin=Pin.LOCK_ENABLE,
         lock_count=LOCK_COUNT,
         toggle_delay=LOCK_UPTIME,
