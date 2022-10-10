@@ -7,5 +7,6 @@ except:
 
 PIN_NUMBERING_MODE = gpio.BCM
 
+
 class Pin(IntEnum):
     PIN = 0
