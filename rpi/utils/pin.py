@@ -10,7 +10,7 @@ PIN_NUMBERING_MODE = gpio.BCM
 
 class Pin(IntEnum):
     DISPLAY_RS = -1
-    DISPLAY_Rw = -1
+    DISPLAY_RW = -1
     DISPLAY_ENABLE = -1
     DISPLAY_DATA_3 = -1
     DISPLAY_DATA_2 = -1
