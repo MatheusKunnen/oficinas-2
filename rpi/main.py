@@ -6,11 +6,16 @@ except:
     import Mock.GPIO as gpio
 
 from utils.constants import SETUP_DELAY
+from utils.classes.lock_manager import LockManager
+
+lock_manager = LockManager()
 
 
 def setup():
     gpio.setmode(gpio.BCM)
     time.sleep(SETUP_DELAY)
+
+    lock_manager.setup()
 
 
 def loop():
