@@ -16,6 +16,7 @@ def setup():
     time.sleep(SETUP_DELAY)
 
     lock_manager.setup()
+    button_manager.setup()
 
 
 def loop():
