@@ -4,6 +4,7 @@ try:
     import RPi.GPIO as gpio
     from utils.classes.display_manager import DisplayManager
     from utils.classes.camera_manager import CameraManager
+    from utils.classes.vault_manager import VaultManager
 except:
     import Mock.GPIO as gpio
     from mocks.classes.display_manager import DisplayManager

@@ -5,6 +5,7 @@ import dlib
 try:
     from utils.classes.display_manager import DisplayManager
     from utils.classes.camera_manager import CameraManager
+    from utils.classes.vault_manager import VaultManager
 except:
     from mocks.classes.display_manager import DisplayManager
     from mocks.classes.camera_manager import CameraManager
