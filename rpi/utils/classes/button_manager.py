@@ -12,7 +12,7 @@ class ButtonManager:
         self.bouncetime = bouncetime
 
     def setup(self):
-        for channel in channels:
+        for channel in self.channels:
             gpio.setup(channel, gpio.IN, pull_up_down=gpio.PUD_DOWN)
 
     def set_callback(self, button_id, callback):
@@ -23,5 +23,5 @@ class ButtonManager:
         )
 
     def reset(self):
-        for channel in channels:
+        for channel in self.channels:
             gpio.remove_event_detect(channel)
