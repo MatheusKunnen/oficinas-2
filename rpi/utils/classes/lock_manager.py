@@ -6,38 +6,25 @@ try:
 except:
     import Mock.GPIO as gpio
 
-from utils.constants import SETUP_DELAY
-from utils.constants import LOCK_COUNT
-from utils.constants import LOCK_UPTIME
-from utils.pin import Pin
-
 
 class LockManager:
-    def __init__(
-        self,
-        selector_pins=[Pin.LOCK_SELECTOR_1, Pin.LOCK_SELECTOR_0],
-        enable_pin=Pin.LOCK_ENABLE,
-        lock_count=LOCK_COUNT,
-        toggle_delay=LOCK_UPTIME,
-    ):
-        assert lock_count <= 2 ** len(selector_pins)
+    def __init__(self, configuration_manager):
+        self.selector_pins = configuration_manager.get("LOCK_SELECTOR_PINS")
+        self.enable_pin = configuration_manager.get("LOCK_ENABLE_PIN")
+        self.lock_count = configuration_manager.get("LOCK_COUNT")
+        self.toggle_delay = configuration_manager.get("LOCK_TOGGLE_DELAY")
 
-        self.selector_pins = selector_pins
-        self.enable_pin = enable_pin
-        self.lock_count = lock_count
-        self.toggle_delay = toggle_delay
+        assert self.lock_count <= 2 ** len(self.selector_pins)
 
     def setup(self):
         gpio.setup(self.enable_pin, gpio.OUT)
-        time.sleep(SETUP_DELAY)
+        time.sleep(0.5)
         gpio.output(self.enable_pin, gpio.LOW)
-        time.sleep(SETUP_DELAY)
 
         for pin in self.selector_pins:
             gpio.setup(pin, gpio.OUT)
-            time.sleep(SETUP_DELAY)
+            time.sleep(0.5)
             gpio.output(pin, gpio.LOW)
-            time.sleep(SETUP_DELAY)
 
     def toggle(self, lock_id):
         assert lock_id >= 0 and lock_id < self.lock_count
@@ -53,4 +40,4 @@ class LockManager:
         time.sleep(self.toggle_delay)
 
         gpio.output(self.enable_pin, gpio.LOW)
-        time.sleep(SETUP_DELAY)
+        time.sleep(0.5)

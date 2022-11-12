@@ -14,6 +14,9 @@ def set_should_continue():
 def starting(ctx, goto):
     global should_continue
 
+    if ctx.configuration_manager.get("ADMIN_MODE"):
+        goto("admin")
+
     if should_continue == True:
         goto("recognition")
 
