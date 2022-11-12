@@ -20,7 +20,7 @@ def recognition_before_enter(ctx):
 
 @recognition_state.before_exit()
 def recognition_before_exit(ctx):
-    should_continue = False
+    pass
 
 
 @recognition_state.on_timeout(10)
