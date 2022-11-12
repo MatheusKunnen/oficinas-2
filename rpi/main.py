@@ -37,7 +37,7 @@ state_machine.add_state(recognition_state)
 state_machine.add_state(opening_state)
 
 
-def sigint_handler():
+def sigint_handler(sig, frame):
     gpio.cleanup()
     sys.exit(0)
 
