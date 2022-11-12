@@ -2,68 +2,76 @@ import time
 
 
 class StateMachine:
+    class State:
+        def __init__(self, name):
+            self.name = name
+
+            self._main = None
+            self._before_enter = None
+            self._before_exit = None
+            self._timeout = None
+
+        def main(self):
+            def main_decorator(func):
+                self._main = func
+                return func
+
+            return main_decorator
+
+        def before_enter(self):
+            def before_enter_decorator(func):
+                self._before_enter = func
+                return func
+
+            return before_enter_decorator
+
+        def before_exit(self):
+            def before_exit_decorator(func):
+                self._before_exit = func
+                return func
+
+            return before_exit_decorator
+
+        def on_timeout(self, time):
+            def timeout_decorator(func):
+                self._timeout = func
+                self._timeout.time = time
+                return func
+
+            return timeout_decorator
+
     def __init__(self, ctx):
         self.ctx = ctx
 
-        self.current_state = None
-        self.current_timeout = None
+        self.current_state = StateMachine.State(None)
         self.states = {}
-        self.before_enters = {}
-        self.before_exits = {}
-        self.timeouts = {}
 
     def goto(self, state_name):
-        before_exit = self.before_exits.get(self.current_state, None)
+        before_exit = self.current_state._before_exit
 
         if not before_exit is None:
             before_exit(self.ctx)
 
-        self.current_state = state_name
+        self.current_state = self.states[state_name]
 
-        timeout = self.timeouts.get(state_name, None)
+        timeout = self.current_state._timeout
         self.current_timeout = (
             float("inf") if timeout is None else time.time() + timeout.time
         )
 
-        before_enter = self.before_enters.get(self.current_state, None)
+        before_enter = self.current_state._before_enter
 
         if not before_enter is None:
             before_enter(self.ctx)
 
+    def add_state(self, state):
+        self.states[state.name] = state
+
     def run(self):
         state = self.current_state
-        goto = lambda state: self.goto(state)
+        goto = lambda state_name: self.goto(state_name)
 
-        self.states[self.current_state](self.ctx, goto)
+        self.current_state._main(self.ctx, goto)
 
         if time.time() >= self.current_timeout and self.current_state == state:
-            self.timeouts[self.current_state](self.ctx, goto)
-
-    def state(self, name):
-        def state_decorator(func):
-            self.states[name] = func
-            return func
-
-        return state_decorator
-
-    def before_enter(self, state_name):
-        def before_enter_decorator(func):
-            self.before_enters[state_name] = func
-            return func
-
-        return before_enter_decorator
-
-    def before_exit(self, state_name):
-        def before_exit_decorator(func):
-            self.before_exits[state_name] = func
-            return func
-
-        return before_exit_decorator
-
-    def on_timeout(self, state_name, time):
-        def timeout_decorator(func):
-            self.timeouts[state_name] = func
-            self.timeouts[state_name].time = time
-            return func
-
-        return timeout_decorator
+            self.current_state._timeout(self.ctx, goto)
