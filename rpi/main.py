@@ -44,12 +44,12 @@ def sigint_handler():
 
 def setup():
     gpio.setmode(gpio.BCM)
-    time.sleep(SETUP_DELAY)
 
     lock_manager.setup()
     button_manager.setup()
     vault_manager.setup()
     state_machine.goto("starting")
+    time.sleep(SETUP_DELAY)
 
     signal.signal(signal.SIGINT, sigint_handler)
 
