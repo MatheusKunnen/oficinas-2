@@ -12,5 +12,5 @@ class Pin(IntEnum):
     LOCK_SELECTOR_0 = 17
     LOCK_SELECTOR_1 = 27
     LOCK_ENABLE = 23
-    BUTTON_0 = 22
-    BUTTON_1 = 18
+    BUTTON_0 = 18
+    BUTTON_1 = 22
