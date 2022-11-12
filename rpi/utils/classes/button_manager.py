@@ -19,7 +19,7 @@ class ButtonManager:
         assert button_id < len(self.channels)
 
         gpio.add_event_detect(
-            self.channels[button_id], gpio.RISING, callback, bouncetime
+            self.channels[button_id], gpio.RISING, callback, self.bouncetime
         )
 
     def reset(self):
