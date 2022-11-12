@@ -1,4 +1,6 @@
 import time
+import signal
+import sys
 
 try:
     import RPi.GPIO as gpio
@@ -35,6 +37,11 @@ state_machine.add_state(recognition_state)
 state_machine.add_state(opening_state)
 
 
+def sigint_handler():
+    gpio.cleanup()
+    sys.exit(0)
+
+
 def setup():
     gpio.setmode(gpio.BCM)
     time.sleep(SETUP_DELAY)
@@ -44,10 +51,11 @@ def setup():
     vault_manager.setup()
     state_machine.goto("starting")
 
+    signal.signal(signal.SIGINT, sigint_handler)
+
 
 def loop():
     state_machine.run()
-    pass
 
 
 def main():
