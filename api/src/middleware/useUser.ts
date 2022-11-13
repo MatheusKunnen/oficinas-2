@@ -26,9 +26,7 @@ const useUserAuth = (validate: boolean = true) =>
           const [alias, pass] = Buffer.from(token, 'base64')
             .toString('utf8')
             .split(':');
-          console.log(alias, pass);
           user = await User.getByUsername(alias);
-          console.log(user);
           if (user && (await authManager.isValidPassword(user, pass))) {
           } else {
             user = undefined;

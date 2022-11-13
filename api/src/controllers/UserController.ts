@@ -10,6 +10,7 @@ export default class UserController {
     res: Response,
     next: Function
   ): Promise<void> {
+    if (!req.user) throw new ErrorResponse('Invalid user', 401);
     User.validateCreateUser(req.body);
     const conn = await req.db.getConnection();
 
