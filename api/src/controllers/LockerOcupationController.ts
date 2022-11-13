@@ -4,6 +4,36 @@ import LockerOcupationDescriptorDao from '../dao/LockerOcupationDescriptorDao';
 import ErrorResponse from '../error/ErrorResponse';
 
 export default class LockerOcupationController {
+  // @description   Gets locker ocupation status
+  // @route         GET /locker_ocupation/in_use
+  // @access        Private (user & localhost)
+  public async getStatus(
+    req: Request,
+    res: Response,
+    next: Function
+  ): Promise<void> {
+    if (!req.user && req.hostname !== 'localhost')
+      throw new ErrorResponse('Invalid client', 403);
+
+    const conn = await req.db.getConnection();
+
+    try {
+      const LockerOcupation = new LockerOcupationDao(conn);
+      const LockerOcupationDescriptor = new LockerOcupationDescriptorDao(conn);
+
+      const data = await LockerOcupation.getOcupations(
+        req.config.getNumLockers()
+      );
+
+      res.status(200).json({ data: data });
+    } catch (error) {
+      throw error;
+    } finally {
+      conn.release();
+    }
+    return;
+  }
+
   // @description   Register locker ocupation
   // @route         POST /locker_ocupation
   // @access        Private (localhost only)
