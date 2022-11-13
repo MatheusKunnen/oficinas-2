@@ -12,6 +12,7 @@ import UserRoute from './routes/UserRoute';
 import errorHandler from './middleware/errorHandler';
 import notFoundHandler from './middleware/notFoundHandler';
 import ParameterRoute from './routes/ParameterRoute';
+import ClientDescriptorRoute from './routes/ClientDescriptorRoute';
 
 export default class Server {
   private app: express.Application;
@@ -43,6 +44,13 @@ export default class Server {
   }
 
   private initEndpoints() {
+    // Client Descriptor router
+    const clientDescriptorRoute = new ClientDescriptorRoute(
+      this.configuration,
+      this.app,
+      this.localConfig.getApiHome()
+    );
+    clientDescriptorRoute.initRouter();
     // Parameters router
     const parametersRoute = new ParameterRoute(
       this.configuration,
