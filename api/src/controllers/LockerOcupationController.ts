@@ -4,6 +4,35 @@ import LockerOcupationDescriptorDao from '../dao/LockerOcupationDescriptorDao';
 import ErrorResponse from '../error/ErrorResponse';
 
 export default class LockerOcupationController {
+  // @description   Gets lockers
+  // @route         GET /locker_ocupation?id_locker=
+  // @access        Private user
+  public async getLockersOcupation(
+    req: Request,
+    res: Response,
+    next: Function
+  ): Promise<void> {
+    let id_locker = 0;
+    if (!req.user) throw new ErrorResponse('Invalid user', 403);
+    if (!isNaN(Number(req.query.id_locker)))
+      id_locker = Number(req.query.id_locker);
+
+    const conn = await req.db.getConnection();
+
+    try {
+      const LockerOcupation = new LockerOcupationDao(conn);
+
+      const data = await LockerOcupation.getOcupationByLockerId(id_locker);
+
+      res.status(200).json({ data: data });
+    } catch (error) {
+      throw error;
+    } finally {
+      conn.release();
+    }
+    return;
+  }
+
   // @description   Gets locker ocupation status
   // @route         GET /locker_ocupation/in_use
   // @access        Private (user & localhost)
@@ -19,7 +48,6 @@ export default class LockerOcupationController {
 
     try {
       const LockerOcupation = new LockerOcupationDao(conn);
-      const LockerOcupationDescriptor = new LockerOcupationDescriptorDao(conn);
 
       const data = await LockerOcupation.getOcupations(
         req.config.getNumLockers()

@@ -18,10 +18,20 @@ export default class LockerOcupationRoute extends Route {
   }
 
   loadRouter(): void {
-    this.router.post('/', asyncHandler(this.controller.create));
-    this.router.get('/in_use', asyncHandler(this.controller.getStatus));
+    this.router.post('/', useUser(false), asyncHandler(this.controller.create));
+    this.router.get(
+      '/',
+      useUser(true),
+      asyncHandler(this.controller.getLockersOcupation)
+    );
+    this.router.get(
+      '/in_use',
+      useUser(false),
+      asyncHandler(this.controller.getStatus)
+    );
     this.router.put(
       '/:id_ocupation/leave',
+      useUser(false),
       asyncHandler(this.controller.leave)
     );
   }

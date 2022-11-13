@@ -40,7 +40,7 @@ export default class LockerOcupationDao extends Dao {
     const result = await this.connection.query({
       text: `SELECT *, (SELECT id_descriptor FROM locker_ocupation_descriptor lod WHERE id_ocupation = loc.id ORDER BY id_descriptor ASC LIMIT 1) as main_descriptor 
       FROM locker_ocupation loc
-      WHERE loc.id_locker = $1 AND (loc.leave_time IS NULL OR 0 = $2) ORDER BY loc.id_locker`,
+      WHERE (loc.id_locker = $1 OR 0 = $1) AND (loc.leave_time IS NULL OR 0 = $2) ORDER BY loc.id_locker ASC, loc.id DESC`,
       values: [id_locker, onlyInUse ? null : 0],
     });
     if (result.getRowCount() <= 0) return null;
