@@ -19,5 +19,15 @@ export default class ClientDescriptorRoute extends Route {
 
   loadRouter(): void {
     this.router.post('/', asyncHandler(this.controller.create));
+    this.router.get(
+      '/:id',
+      useUser(false),
+      asyncHandler(this.controller.getById)
+    );
+    this.router.get(
+      '/:id/image',
+      useUser(false),
+      asyncHandler(this.controller.getImageById)
+    );
   }
 }

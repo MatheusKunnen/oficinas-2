@@ -20,16 +20,16 @@ export class ClientDescriptor {
     )
       throw new ErrorResponse('Invalid image', 400);
     return {
-      descriptor: Buffer.from(clientDescriptor.descriptor, 'base64'),
-      image: Buffer.from(clientDescriptor.image, 'base64'),
+      descriptor: Buffer.from(clientDescriptor.descriptor),
+      image: Buffer.from(clientDescriptor.image.toString()),
     };
   }
 
   public static sanitizeForJson(clientDescriptor: ClientDescriptorModel) {
     return {
       ...clientDescriptor,
-      descriptor: clientDescriptor.descriptor.toString('base64'),
-      image: clientDescriptor.image.toString('base64'),
+      descriptor: clientDescriptor.descriptor.toString(),
+      image: clientDescriptor.image.toString(),
     };
   }
 }
