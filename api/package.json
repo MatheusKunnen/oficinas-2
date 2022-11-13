@@ -2,7 +2,7 @@
   "name": "facelook-web-api",
   "version": "0.0.1",
   "description": "API REST - Facelook.",
-  "main": "index.js",
+  "main": "index.ts",
   "license": "MIT",
   "scripts": {
     "dev": "nodemon index.ts",
