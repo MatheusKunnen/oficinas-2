@@ -18,9 +18,13 @@ export default class ParameterRoute extends Route {
   }
 
   loadRouter(): void {
+    this.router.route('/').get(useUser(true), this.controller.getParameters);
     this.router.get(
       '/locker',
       asyncHandler(this.controller.getParametersLocker)
     );
+    this.router
+      .route('/:key')
+      .put(useUser(true), this.controller.updateParameter);
   }
 }
