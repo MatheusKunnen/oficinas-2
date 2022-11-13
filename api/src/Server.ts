@@ -13,6 +13,7 @@ import errorHandler from './middleware/errorHandler';
 import notFoundHandler from './middleware/notFoundHandler';
 import ParameterRoute from './routes/ParameterRoute';
 import ClientDescriptorRoute from './routes/ClientDescriptorRoute';
+import LockerOcupationRoute from './routes/LockerOcupationRoute';
 
 export default class Server {
   private app: express.Application;
@@ -51,6 +52,13 @@ export default class Server {
       this.localConfig.getApiHome()
     );
     clientDescriptorRoute.initRouter();
+    // Locker Ocupation router
+    const lockerOcupationRouter = new LockerOcupationRoute(
+      this.configuration,
+      this.app,
+      this.localConfig.getApiHome()
+    );
+    lockerOcupationRouter.initRouter();
     // Parameters router
     const parametersRoute = new ParameterRoute(
       this.configuration,

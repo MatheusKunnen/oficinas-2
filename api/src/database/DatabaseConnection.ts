@@ -41,4 +41,8 @@ export default class DatabaseConnection {
     }
     this.conn.release();
   }
+
+  public isInTransaction() {
+    return this.inTransaction;
+  }
 }
