@@ -4,6 +4,7 @@ import ErrorResponse from '../error/ErrorResponse';
 const errorHandler =
   () =>
   (err: any, req: express.Request, res: express.Response, next: Function) => {
+    console.log(err);
     if (typeof err.httpCode === 'number') {
       const error: ErrorResponse = err;
       return res.status(error.getHttpCode()).json({

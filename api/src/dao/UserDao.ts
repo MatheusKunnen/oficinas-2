@@ -1,35 +1,35 @@
 import DatabaseConnection from '../database/DatabaseConnection';
 import Dao from './Dao';
-import { UserModel as User } from '../model/User';
+import { UserModel } from '../model/User';
 
 export default class UserDao extends Dao {
   constructor(connection: DatabaseConnection) {
     super('user', connection);
   }
 
-  public async getByUsername(alias: string): Promise<User> | null {
+  public async getByUsername(alias: string): Promise<UserModel | null> {
     const result = await this.connection.query({
-      text: `SELECT * FROM user WHERE username = $1`,
+      text: `SELECT * FROM users WHERE username = $1`,
       values: [alias],
     });
     if (result.getRowCount() <= 0) return null;
 
-    return result.getRows()[0] as User;
+    return result.getRows()[0] as UserModel;
   }
 
-  public async create(user: User): Promise<User | null> {
-    const result = await this.connection.query({
-      text: `INSERT INTO user (username, password, privilege, active, last_login) VALUES ($1,$2,$3,$4,NOW())`,
-      values: [
-        user.username,
-        user.password,
-        user.privilege,
-        user.active,
-        user.last_login,
-      ],
-    });
-    if (result.getRowCount() <= 0) return null;
+  public async create(user: UserModel): Promise<UserModel | null> {
+    console.log(user);
+    try {
+      const result = await this.connection.query({
+        text: `INSERT INTO users (id, username, password, privilege) VALUES (nextval('user_id_seq'), $1,$2,$3)`,
+        values: [user.username, user.password, user.privilege],
+      });
+      if (result.getRowCount() <= 0) return null;
 
-    return result.getRows()[0] as User;
+      return result.getRows()[0] as UserModel;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
   }
 }
