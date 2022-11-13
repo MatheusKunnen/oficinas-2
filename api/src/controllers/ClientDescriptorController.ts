@@ -33,7 +33,7 @@ export default class ClientDescriptorController {
     return;
   }
   // @description   Returns client descriptor by id
-  // @route         POST /client_descriptor/:id
+  // @route         GET /client_descriptor/:id
   // @access        Private (localhost & user)
   public async getById(
     req: Request,

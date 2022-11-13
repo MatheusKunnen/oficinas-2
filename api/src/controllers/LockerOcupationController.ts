@@ -58,6 +58,13 @@ export default class LockerOcupationController {
       const LockerOcupation = new LockerOcupationDao(conn);
       const LockerOcupationDescriptor = new LockerOcupationDescriptorDao(conn);
 
+      const ocupation = await LockerOcupation.getOcupationByLockerId(
+        req.body.id_locker,
+        true
+      );
+      if (ocupation !== null)
+        throw new ErrorResponse('Locker already in use', 400);
+
       const id_ocupation = await LockerOcupation.create({
         id_locker: req.body.id_locker,
       });
@@ -96,11 +103,6 @@ export default class LockerOcupationController {
       throw new ErrorResponse('Invalid client', 403);
     if (isNaN(Number(req.params.id_ocupation)))
       throw new ErrorResponse('Invalid ocupation', 400);
-    if (
-      typeof req.body.id_descriptor === 'undefined' ||
-      isNaN(req.body.id_descriptor)
-    )
-      throw new ErrorResponse('Invalid descriptor', 400);
 
     const id_ocupation = Number(req.params.id_ocupation);
 
@@ -113,14 +115,19 @@ export default class LockerOcupationController {
 
       await LockerOcupation.leave(id_ocupation);
 
-      const id_ocupation_descriptor = await LockerOcupationDescriptor.create({
-        id_descriptor: req.body.id_descriptor,
-        id_ocupation: String(id_ocupation),
-      });
+      let id_ocupation_descriptor = undefined;
+      if (
+        typeof req.body.id_descriptor === 'string' &&
+        req.body.id_descriptor.length > 0
+      ) {
+        id_ocupation_descriptor = await LockerOcupationDescriptor.create({
+          id_descriptor: req.body.id_descriptor,
+          id_ocupation: String(id_ocupation),
+        });
 
-      if (id_ocupation_descriptor === null)
-        throw new ErrorResponse('Unexpected error', 500);
-
+        if (id_ocupation_descriptor === null)
+          throw new ErrorResponse('Unexpected error', 500);
+      }
       await conn.commit();
       res.status(200).json({ data: { id_ocupation, id_ocupation_descriptor } });
     } catch (error) {
