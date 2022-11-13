@@ -5,6 +5,8 @@ export default class LocalConfig {
   data: any = {
     api_port: 5100,
     api_home: '/',
+    jwt_secret: 'this-is-my-jwt-secret',
+    password_secret: 'this-is-my-password-secret',
     database: {},
   };
   constructor(configFile: string) {
@@ -24,5 +26,13 @@ export default class LocalConfig {
 
   public getApiHome() {
     return this.data.api_home;
+  }
+
+  public getJwtSecret() {
+    return this.data.jwt_secret;
+  }
+
+  public getPasswordSecret() {
+    return this.data.password_secret;
   }
 }
