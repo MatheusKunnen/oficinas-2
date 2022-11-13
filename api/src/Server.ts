@@ -11,6 +11,7 @@ import AuthManager from './utils/AuthManager';
 import UserRoute from './routes/UserRoute';
 import errorHandler from './middleware/errorHandler';
 import notFoundHandler from './middleware/notFoundHandler';
+import ParameterRoute from './routes/ParameterRoute';
 
 export default class Server {
   private app: express.Application;
@@ -42,6 +43,14 @@ export default class Server {
   }
 
   private initEndpoints() {
+    // Parameters router
+    const parametersRoute = new ParameterRoute(
+      this.configuration,
+      this.app,
+      this.localConfig.getApiHome()
+    );
+    parametersRoute.initRouter();
+    // User router
     const userRoute = new UserRoute(
       this.configuration,
       this.app,
