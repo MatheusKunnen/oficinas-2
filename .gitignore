@@ -194,3 +194,4 @@ build
 dist
 config.json
 *.env
+*.DS_Store
