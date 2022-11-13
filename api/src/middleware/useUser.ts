@@ -51,8 +51,6 @@ const useUserAuth = (validate: boolean = true) =>
         req.user = user ? user : undefined;
         return next();
       } catch (error: any) {
-        console.log(error);
-
         throw new ErrorResponse('Invalid User', 401);
       } finally {
         await conn?.release();
