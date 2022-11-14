@@ -31,51 +31,47 @@ class ApiManager:
 
         if entries["data"] is None:
             return []
-        for entry in entries:
+        for entry in entries["data"]:
+            print(entry)
             entry["descriptor"] = self.get_client_descriptor(
                 entry["main_descriptor"])
 
-        return entries
+        return entries["data"]
 
     def get_client_descriptor(self, id_descriptor):
-        return dlib.vector(
-            json.loads(
-                b64decode(
-                    requests.get(
-                        f"{self.url}/client_descriptor/{id_descriptor}").text()
-                )
-            )
-        )
+        res = requests.get(
+            f"{self.url}/client_descriptor/{id_descriptor}").json()
+        return dlib.vector(json.loads(b64decode(res.get("data")["descriptor"])))
 
     def register_client_descriptor(self, descriptor, image):
         encoded_image = b64encode(cv2.imencode(".jpg", image)[1].tobytes())
 
         return requests.post(
             f"{self.url}/client_descriptor/",
-            {
-                "descriptor": b64encode(json.dumps(list(descriptor))),
-                "image": f"data:image/jpeg;base64,{encoded_image}",
+            json={
+                # b64encode(json.dumps(list(descriptor))),
+                "descriptor": b64encode(json.dumps(list(descriptor)).encode('utf-8')),
+                "image": f"data:image/jpeg;base64,{encoded_image.decode('utf-8')}",
             },
-        )
+        ).json()["data"]
 
     def register_new_occupation(self, descriptor, image, id_locker):
-        id_descriptor = self.register_client_descriptor(descriptor, image)
+        descriptor = self.register_client_descriptor(descriptor, image)
         id_occupation = requests.post(
-            f"{self.url}/locker_ocupation",
-            {
-                "id_descriptor": id_descriptor,
+            f"{self.url}/locker_ocupation", json={
+                "id_descriptor": descriptor["id"],
                 "id_locker": id_locker,
             },
         )
 
-        return (id_descriptor, id_occupation)
+        return (descriptor["id"], id_occupation)
 
     def register_renewing_occupation(self, descriptor, image, id_locker, id_occupation):
         id_descriptor = self.register_client_descriptor(descriptor, image)
-        id_occupation = requests.post(
+        occupation = requests.post(
             f"{self.url}/locker_ocupation",
             {
-                "id_descriptor": id_descriptor,
+                "id_descriptor": id_descriptor["id"],
                 "id_locker": id_locker,
                 "id_ocupation": id_occupation,
             },

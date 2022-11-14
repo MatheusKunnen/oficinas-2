@@ -5,10 +5,10 @@ starting_state = StateMachine.State("starting")
 should_continue = False
 
 
-def set_should_continue():
+def set_should_continue(channel):
     global should_continue
     should_continue = True
-
+    print("here")
 
 @starting_state.main()
 def starting(ctx, goto):
@@ -23,7 +23,7 @@ def starting(ctx, goto):
 
 @starting_state.before_enter()
 def starting_before_enter(ctx):
-    ctx.display_manager.write("Aperte um botão para continuar")
+    ctx.display_manager.write("Aperte um botao para continuar")
 
     ctx.button_manager.set_callback(0, set_should_continue)
     ctx.button_manager.set_callback(1, set_should_continue)

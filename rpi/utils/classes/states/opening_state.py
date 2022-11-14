@@ -9,6 +9,7 @@ vault = None
 
 
 def set_keep_using(value):
+    print("here", value)
     global keep_using
     keep_using = value
 
@@ -33,8 +34,8 @@ def opening_before_enter(ctx):
     global vault
     global is_full
 
-    ctx.button_manager.set_callback(0, lambda: set_keep_using(True))
-    ctx.button_manager.set_callback(1, lambda: set_keep_using(False))
+    ctx.button_manager.set_callback(0, lambda c: set_keep_using(False))
+    ctx.button_manager.set_callback(1, lambda c: set_keep_using(True))
 
     vault = ctx.vault_manager.get_vault(ctx.face, ctx.image)
 
@@ -43,10 +44,12 @@ def opening_before_enter(ctx):
         sleep(3)
         is_full = True
     else:
+        global keep_using
         ctx.display_manager.write(f"Armario {vault} aberto")
         ctx.lock_manager.toggle(vault)
-
+        keep_using = True
         ctx.display_manager.write("Continuar usando? (sim/nao)")
+        sleep(3)
 
 
 @opening_state.before_exit()

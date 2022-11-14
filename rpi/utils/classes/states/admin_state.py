@@ -8,12 +8,12 @@ should_increment = False
 should_open = False
 
 
-def set_should_increment():
+def set_should_increment(channel):
     global should_increment
     should_increment = True
 
 
-def set_should_open():
+def set_should_open(channel):
     global should_open
     should_open = True
 

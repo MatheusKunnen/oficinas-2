@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from random import choice
 import dlib
+import numpy as np
 
 
 @dataclass
@@ -14,7 +15,8 @@ class VaultManager:
     def __init__(self, api_manager, configuration_manager):
         self.api_manager = api_manager
         self.configuration_manager = configuration_manager
-        self.vaults = [None for _ in range(configuration_manager.get("LOCK_COUNT"))]
+        self.vaults = [None for _ in range(
+            configuration_manager.get("LOCK_COUNT"))]
 
     def setup(self):
         in_use = self.api_manager.get_in_use()
@@ -30,7 +32,10 @@ class VaultManager:
         return len([i for i in self.vaults if i is not None]) == len(self.vaults)
 
     def is_descriptor_similar(self, d1, d2):
-        return True
+        # print(d1, d2)
+        d = np.linalg.norm(np.asarray(d1) - np.asarray(d2))
+        print(d)
+        return d < self.configuration_manager.get("similarity_threshold")
 
     def get_vault(self, descriptor, image):
         for id_locker, vault in enumerate(self.vaults):
@@ -44,9 +49,9 @@ class VaultManager:
                     descriptor, image, id_locker, vault.id_occupation
                 )
 
-                vault.id_descriptor = id_descriptor
-                vault.id_occupation = id_occupation
-                vault.descriptor = descriptor
+                # vault.id_descriptor = id_descriptor
+                # vault.id_occupation = id_occupation
+                # vault.descriptor = descriptor
 
                 return id_locker
 
@@ -56,13 +61,14 @@ class VaultManager:
                     id_descriptor,
                     id_occupation,
                 ) = self.api_manager.register_new_occupation(
-                    descriptor, image, vault.id_locker
+                    descriptor, image, id_locker
                 )
-
-                vault.id_descriptor = id_descriptor
-                vault.id_occupation = id_occupation
-                vault.descriptor = descriptor
-
+                # vault = dict({})
+                # vault["id_descriptor"] = id_descriptor
+                # vault["id_occupation"] = id_occupation
+                # vault["descriptor"] = descriptor
+                self.vaults[id_locker] = Vault(
+                    id_occupation, id_descriptor, descriptor)
                 return id_locker
 
         return None

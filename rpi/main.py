@@ -72,7 +72,7 @@ def setup():
 
 def loop():
     state_machine.run()
-
+    time.sleep(0.01)
 
 def main():
     setup()
