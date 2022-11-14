@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import LockerStatus from './LockerStatus';
-import { Container } from '@mui/material';
+import { Container, Box, Typography } from '@mui/material';
 import { connect } from 'react-redux';
 import { logout } from '../../redux/actions/auth';
 import Url from '../../utils/Url';
@@ -69,6 +69,15 @@ const LockerMonitor = ({ token, logout, ...props }) => {
   return (
     <Container>
       <LockerStatus lock_count={lock_count} lock_used={lock_used.length} />
+      <Box
+        padding={1}
+        borderRadius={1}
+        boxShadow={2}
+        mt={1}
+        backgroundColor={'lightgrey'}
+      >
+        <Typography variant="h6">GAVETAS EM USO</Typography>
+      </Box>
       <LockerOcupationList lock_used={lock_used} />
     </Container>
   );

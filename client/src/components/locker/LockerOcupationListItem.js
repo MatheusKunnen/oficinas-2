@@ -68,11 +68,12 @@ const LockerOcupationListItem = ({
       boxShadow={2}
       width="100%"
       display={'flex'}
+      alignItems={'center'}
       {...props}
     >
       <Avatar
         src={Url.getDescriptorImageUrl(main_descriptor)}
-        sx={{ width: '10rem', height: '10rem' }}
+        sx={{ width: '7.5rem', height: '7.5rem' }}
       />
       <Box
         display={'flex'}
@@ -94,7 +95,7 @@ const LockerOcupationListItem = ({
             <Typography variant="normal" width="100%">
               <strong>{label}</strong>
             </Typography>
-            <Typography variant="h5" width="100%">
+            <Typography variant="h6" width="100%">
               {value}
             </Typography>
           </Box>
