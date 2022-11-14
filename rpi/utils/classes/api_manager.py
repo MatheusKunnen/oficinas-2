@@ -7,8 +7,8 @@ import dlib
 
 
 class ApiManager:
-    def __init__(self, host="localhost", port=5001):
-        self.url = f"{host}:{port}"
+    def __init__(self, host="localhost", port=5001, base="/api"):
+        self.url = f"{host}:{port}{base}"
 
     def get_parameters(self):
         entries = requests.get(f"{self.url}/parameter").json()
@@ -23,7 +23,8 @@ class ApiManager:
         entries = requests.get(f"{self.url}/locker_ocupation/in_use").json()
 
         for entry in entries:
-            entry["descriptor"] = self.get_client_descriptor(entry["main_descriptor"])
+            entry["descriptor"] = self.get_client_descriptor(
+                entry["main_descriptor"])
 
         return entries
 
@@ -31,7 +32,8 @@ class ApiManager:
         return dlib.vector(
             json.loads(
                 b64decode(
-                    requests.get(f"{self.url}/client_descriptor/{id_descriptor}").text()
+                    requests.get(
+                        f"{self.url}/client_descriptor/{id_descriptor}").text()
                 )
             )
         )

@@ -4,7 +4,7 @@ import fs from 'fs';
 export default class LocalConfig {
   data: any = {
     api_port: 5100,
-    api_home: '/',
+    api_home: '/api',
     jwt_secret: 'this-is-my-jwt-secret',
     password_secret: 'this-is-my-password-secret',
     database: {},
