@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Typography } from '@mui/material';
+import Url from '../../utils/Url';
 
+const initialDataState = {
+  last_month_usage: 'N/A',
+  mean_usage_time: 0,
+};
 const LockerStatistics = ({ token, ...props }) => {
-  const [data, setData] = useState({
-    last_month_usage: 50,
-    mean_usage_time: 123,
-  });
+  const [data, setData] = useState(initialDataState);
   const info = [
     {
       label: 'Usos (30 dias)',
@@ -13,9 +15,39 @@ const LockerStatistics = ({ token, ...props }) => {
     },
     {
       label: 'Tempo médio',
-      value: `${data.mean_usage_time}min`,
+      value: `${Math.round(data.mean_usage_time)}min`,
     },
   ];
+
+  const getData = async () => {
+    try {
+      const res = await fetch(Url.getOcupationsStatisticsUrl(), {
+        headers: {
+          Authorization: token,
+        },
+      });
+      const json = await res.json();
+      if (json.data) return json.data;
+    } catch (error) {
+      console.error(error);
+    }
+    return initialDataState;
+  };
+
+  useEffect(() => {
+    let ok = true;
+    const run = async () => {
+      const tmp = await getData();
+      if (!ok) return;
+      if (tmp) setData(tmp);
+      else setData(initialDataState);
+    };
+    run();
+    return () => {
+      ok = false;
+    };
+    //eslint-disable-next-line
+  }, []);
 
   return (
     <Box
@@ -25,6 +57,7 @@ const LockerStatistics = ({ token, ...props }) => {
       borderRadius={1}
       py={4}
       boxShadow={2}
+      {...props}
     >
       {info.map(({ label, value }, i) => (
         <Box

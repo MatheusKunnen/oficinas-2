@@ -24,6 +24,10 @@ const getOcupationsUrl = (host = defaultServerHost) => {
   return `${host}/locker_ocupation`;
 };
 
+const getOcupationsStatisticsUrl = (host = defaultServerHost) => {
+  return `${host}/locker_ocupation/statistics`;
+};
+
 const getDescriptorImageUrl = (id, host = defaultServerHost) => {
   return `${host}/client_descriptor/${id}/image`;
 };
@@ -45,4 +49,5 @@ module.exports = {
   getDescriptorImageUrl,
   getOcupationsUrl,
   getParameterUpdateUrl,
+  getOcupationsStatisticsUrl,
 };
