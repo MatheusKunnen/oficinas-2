@@ -9,4 +9,4 @@ class ConfigurationManager:
         self.map = self.api_manager.get_parameters()
 
     def get(self, key):
-        return self.map[key]
+        return self.map[key.lower()]
