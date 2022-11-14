@@ -12,6 +12,10 @@ const getParametersUrl = (host = defaultServerHost) => {
   return `${host}/parameter`;
 };
 
+const getParameterUpdateUrl = (key, host = defaultServerHost) => {
+  return `${host}/parameter/${key}`;
+};
+
 const getOcupationsInUseUrl = (host = defaultServerHost) => {
   return `${host}/locker_ocupation/in_use`;
 };
@@ -40,4 +44,5 @@ module.exports = {
   getOcupationsInUseUrl,
   getDescriptorImageUrl,
   getOcupationsUrl,
+  getParameterUpdateUrl,
 };

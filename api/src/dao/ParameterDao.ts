@@ -8,7 +8,7 @@ export default class ParameterDao extends Dao {
   }
 
   public async getAllParameters(): Promise<Parameter[] | null> {
-    const text = `SELECT * FROM parameter`;
+    const text = `SELECT * FROM parameter ORDER BY key`;
     const result = await this.connection.query({
       text,
     });

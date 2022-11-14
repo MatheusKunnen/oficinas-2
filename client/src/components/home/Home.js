@@ -6,6 +6,7 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import LockerMonitor from '../locker/LockerMonitor';
 import LockerUsage from '../locker/LockerUsage';
+import Configutation from '../config/Configuration';
 
 const Home = () => {
   const [tab, setTab] = useState('1');
@@ -28,7 +29,9 @@ const Home = () => {
         <TabPanel value="2">
           <LockerUsage />
         </TabPanel>
-        <TabPanel value="3">Item Three</TabPanel>
+        <TabPanel value="3">
+          <Configutation />
+        </TabPanel>
       </TabContext>
     </>
   );
