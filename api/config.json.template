@@ -1,0 +1,10 @@
+{
+  "database": {
+    "user": "",
+    "password": "",
+    "host": "localhost",
+    "port": 5432,
+    "database": "facelook"
+  },
+  "api_port": 5100
+}
