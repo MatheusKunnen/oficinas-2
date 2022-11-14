@@ -86,16 +86,18 @@ export default class LockerOcupationController {
       const LockerOcupation = new LockerOcupationDao(conn);
       const LockerOcupationDescriptor = new LockerOcupationDescriptorDao(conn);
 
-      const ocupation = await LockerOcupation.getOcupationByLockerId(
-        req.body.id_locker,
-        true
-      );
-      if (ocupation !== null)
-        throw new ErrorResponse('Locker already in use', 400);
+      // const ocupation = await LockerOcupation.getOcupationByLockerId(
+      //   req.body.id_locker,
+      //   true
+      // );
+      // if (ocupation !== null)
+      // throw new ErrorResponse('Locker already in use', 400);
 
-      const id_ocupation = await LockerOcupation.create({
-        id_locker: req.body.id_locker,
-      });
+      const id_ocupation = isNaN(Number(req.body.id_ocupation))
+        ? await LockerOcupation.create({
+            id_locker: req.body.id_locker,
+          })
+        : req.body.id_ocupation;
 
       if (id_ocupation === null)
         throw new ErrorResponse('Unexpected error', 500);

@@ -50,7 +50,7 @@ export default class LockerOcupationDao extends Dao {
 
   public async leave(id: number): Promise<number | null> {
     const result = await this.connection.query({
-      text: 'UPDATE locker_ocupation SET leave_time=NOW() WHERE id=$1',
+      text: 'UPDATE locker_ocupation SET leave_time=NOW() WHERE id=(SELECT id FROM locker_ocupation WHERE id_locker = $1 AND leave_time is NULL ORDER BY id DESC LIMIT 1)',
       values: [id],
     });
     if (result.getRowCount() <= 0) return null;
