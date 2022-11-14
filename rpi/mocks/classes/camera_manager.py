@@ -3,18 +3,9 @@ from time import sleep
 
 import dlib
 
-from utils.constants import DLIB_FACE_RECOGNIZER_MODEL_PATH
-from utils.constants import DLIB_FACE_PREDICTOR_PATH
-from utils.constants import WEBCAM_DEVICE_ID
-
 
 class CameraManager:
-    def __init__(
-        self,
-        dlib_face_predictor_path=DLIB_FACE_PREDICTOR_PATH,
-        dlib_face_recognizer_path=DLIB_FACE_RECOGNIZER_MODEL_PATH,
-        webcam_device_id=WEBCAM_DEVICE_ID,
-    ):
+    def __init__(self, configuration_manager):
         pass
 
     def detect_face(self):

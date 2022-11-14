@@ -7,34 +7,47 @@ try:
     from utils.classes.display_manager import DisplayManager
     from utils.classes.camera_manager import CameraManager
     from utils.classes.vault_manager import VaultManager
+    from utils.classes.configuration_manager import ConfigurationManager
 except:
     import Mock.GPIO as gpio
     from mocks.classes.display_manager import DisplayManager
     from mocks.classes.camera_manager import CameraManager
     from mocks.classes.vault_manager import VaultManager
+    from mocks.classes.configuration_manager import ConfigurationManager
 
-from utils.constants import SETUP_DELAY
 from utils.classes.lock_manager import LockManager
 from utils.classes.button_manager import ButtonManager
 from utils.classes.context import Context
 from utils.classes.state_machine import StateMachine
 
-from utils.classes.states import starting_state, recognition_state, opening_state
+from utils.classes.states import (
+    starting_state,
+    recognition_state,
+    opening_state,
+    admin_state,
+)
 
-lock_manager = LockManager()
+configuration_manager = ConfigurationManager()
+lock_manager = LockManager(configuration_manager)
 display_manager = DisplayManager()
-button_manager = ButtonManager()
-camera_manager = CameraManager()
+button_manager = ButtonManager(configuration_manager)
+camera_manager = CameraManager(configuration_manager)
 vault_manager = VaultManager()
 
 state_machine = StateMachine(
     Context(
-        lock_manager, display_manager, button_manager, camera_manager, vault_manager
+        lock_manager,
+        display_manager,
+        button_manager,
+        camera_manager,
+        vault_manager,
+        configuration_manager,
     )
 )
 state_machine.add_state(starting_state)
 state_machine.add_state(recognition_state)
 state_machine.add_state(opening_state)
+state_machine.add_state(admin_state)
 
 
 def sigint_handler(sig, frame):
@@ -48,8 +61,8 @@ def setup():
     lock_manager.setup()
     button_manager.setup()
     vault_manager.setup()
-    state_machine.goto("starting")
-    time.sleep(SETUP_DELAY)
+    state_machine.goto("recognition")
+    time.sleep(0.5)
 
     signal.signal(signal.SIGINT, sigint_handler)
 

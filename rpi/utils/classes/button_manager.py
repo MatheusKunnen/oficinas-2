@@ -3,12 +3,13 @@ try:
 except:
     import Mock.GPIO as gpio
 
-from utils.pin import Pin
-
 
 class ButtonManager:
-    def __init__(self, channels=[Pin.BUTTON_0, Pin.BUTTON_1], bouncetime=500):
-        self.channels = channels
+    def __init__(self, configuration_manager, bouncetime=500):
+        self.channels = [
+            configuration_manager.get("BUTTON_0_PIN"),
+            configuration_manager.get("BUTTON_1_PIN"),
+        ]
         self.bouncetime = bouncetime
 
     def setup(self):

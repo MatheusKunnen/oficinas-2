@@ -1,25 +1,20 @@
 import dlib
 import cv2
 
-from utils.constants import DLIB_FACE_RECOGNIZER_MODEL_PATH
-from utils.constants import DLIB_FACE_PREDICTOR_PATH
-from utils.constants import WEBCAM_DEVICE_ID
-
 
 class CameraManager:
-    def __init__(
-        self,
-        dlib_face_predictor_path=DLIB_FACE_PREDICTOR_PATH,
-        dlib_face_recognizer_path=DLIB_FACE_RECOGNIZER_MODEL_PATH,
-        webcam_device_id=WEBCAM_DEVICE_ID,
-    ):
-        self.dlib_predictor_path = dlib_face_predictor_path
-        self.dlib_face_recognizer_path = dlib_face_recognizer_path
-        self.webcam_device_id = webcam_device_id
+    def __init__(self, configuration_manager):
+        self.dlib_predictor_path = configuration_manager.get("DLIB_FACE_PREDICTOR_PATH")
+        self.dlib_face_recognizer_model_path = configuration_manager.get(
+            "DLIB_FACE_RECOGNIZER_MODEL_PATH"
+        )
+        self.webcam_device_id = configuration_manager.get("WEBCAM_DEVICE_ID")
 
         self.detector = dlib.get_frontal_face_detector()
         self.predictor = dlib.shape_predictor(self.dlib_predictor_path)
-        self.facerec = dlib.face_recognizer_model_v1(self.dlib_face_recognizer_path)
+        self.facerec = dlib.face_recognizer_model_v1(
+            self.dlib_face_recognizer_model_path
+        )
         self.capture = cv2.VideoCapture(self.webcam_device_id)
 
     def detect_face(self):
