@@ -57,6 +57,17 @@ export default class LockerOcupationDao extends Dao {
     return id;
   }
 
+  public async getStatistics(days = 30): Promise<any> {
+    const result = await this.connection.query({
+      text: `SELECT 
+      (SELECT EXTRACT(EPOCH FROM AVG(leave_time - entrance_time))/60  FROM locker_ocupation WHERE leave_time IS NOT NULL AND entrance_time > NOW() - interval '${days}' day) as mean_usage_time,
+      (SELECT COUNT(id) FROM locker_ocupation WHERE entrance_time > NOW() - interval '${days}' day) as last_month_usage
+    `,
+    });
+    if (result.getRowCount() <= 0) return null;
+    return result.getRows()[0];
+  }
+
   private async getNewID(): Promise<string> {
     const result = await this.connection.query({
       text: `SELECT nextval('locker_ocupation_id_seq') as id`,

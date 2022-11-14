@@ -166,4 +166,31 @@ export default class LockerOcupationController {
     }
     return;
   }
+
+  // @description   Gets lockers statistics
+  // @route         GET /locker_ocupation/statistics?days=
+  // @access        Private user
+  public async getStatistics(
+    req: Request,
+    res: Response,
+    next: Function
+  ): Promise<void> {
+    let days = 30;
+    if (!req.user) throw new ErrorResponse('Invalid user', 403);
+    if (!isNaN(Number(req.query.days))) days = Number(req.query.days);
+    const conn = await req.db.getConnection();
+
+    try {
+      const LockerOcupation = new LockerOcupationDao(conn);
+
+      const data = await LockerOcupation.getStatistics(days);
+
+      res.status(200).json({ data: data });
+    } catch (error) {
+      throw error;
+    } finally {
+      conn.release();
+    }
+    return;
+  }
 }

@@ -7,7 +7,11 @@ import asyncHandler from './asyncHandler';
 const useUserAuth = (validate: boolean = true) =>
   asyncHandler(
     async (req: express.Request, res: express.Response, next: Function) => {
-      const authorization = req.headers['authorization'];
+      const authorization =
+        typeof req.headers['authorization'] === 'string'
+          ? req.headers['authorization']
+          : req.headers['Authorization'];
+
       if (typeof authorization !== 'string') {
         if (validate) {
           throw new ErrorResponse('Invalid User', 401);

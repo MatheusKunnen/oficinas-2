@@ -29,6 +29,11 @@ export default class LockerOcupationRoute extends Route {
       useUser(false),
       asyncHandler(this.controller.getStatus)
     );
+    this.router.get(
+      '/statistics',
+      useUser(true),
+      asyncHandler(this.controller.getStatistics)
+    );
     this.router.put(
       '/:id_ocupation/leave',
       useUser(false),
