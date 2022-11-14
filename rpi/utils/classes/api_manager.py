@@ -8,20 +8,29 @@ import dlib
 
 class ApiManager:
     def __init__(self, host="localhost", port=5001, base="/api"):
-        self.url = f"{host}:{port}{base}"
+        self.url = f"http://{host}:{port}{base}"
 
     def get_parameters(self):
-        entries = requests.get(f"{self.url}/parameter").json()
-
-        config = {}
-        for parameter in entries:
-            config[parameter["key"]] = json.loads(parameter["value"])
+        entries = requests.get(f"{self.url}/parameter/locker").json()
+        config = entries
+        config["admin_mode"] = json.loads(config["admin_mode"])
+        config["button_0_pin"] = json.loads(config["button_0_pin"])
+        config["button_1_pin"] = json.loads(config["button_1_pin"])
+        config["lock_count"] = json.loads(config["lock_count"])
+        config["lock_enable_pin"] = json.loads(config["lock_enable_pin"])
+        config["lock_selector_pins"] = json.loads(config["lock_selector_pins"])
+        config["lock_toggle_delay"] = json.loads(config["lock_toggle_delay"])
+        config["similarity_threshold"] = json.loads(
+            config["similarity_threshold"])
+        config["webcam_device_id"] = json.loads(config["webcam_device_id"])
 
         return config
 
     def get_in_use(self):
         entries = requests.get(f"{self.url}/locker_ocupation/in_use").json()
 
+        if entries["data"] is None:
+            return []
         for entry in entries:
             entry["descriptor"] = self.get_client_descriptor(
                 entry["main_descriptor"])
