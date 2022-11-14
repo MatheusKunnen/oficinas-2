@@ -13,7 +13,7 @@ import { Provider } from 'react-redux';
 import { store } from './redux/store';
 
 import '@fontsource/roboto';
-import { CssBaseline, ThemeProvider } from '@material-ui/core';
+import { CssBaseline, ThemeProvider } from '@mui/material';
 import theme from './theme';
 import HomePage from './components/pages/HomePage';
 

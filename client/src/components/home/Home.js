@@ -14,7 +14,7 @@ const Home = () => {
     setTab(newValue);
   };
   return (
-    <>
+    <Box>
       <TabContext value={tab}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <TabList onChange={handleChange} centered>
@@ -33,7 +33,7 @@ const Home = () => {
           <Configutation />
         </TabPanel>
       </TabContext>
-    </>
+    </Box>
   );
 };
 

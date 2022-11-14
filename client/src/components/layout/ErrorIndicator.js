@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { Box, Typography, useTheme } from '@material-ui/core';
+import { Box, Typography, useTheme } from '@mui/material';
 import getErrorIndicatorStyle from '../../styles/getErrorInidicatorStyle';
 
 const ErrorIndicator = ({ error, ...props }) => {

@@ -1,10 +1,6 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import {
-  CircularProgress,
-  LinearProgress,
-  Typography,
-} from '@material-ui/core';
+import { CircularProgress, LinearProgress, Typography } from '@mui/material';
 
 const LoadingIndicator = ({
   isLinear,

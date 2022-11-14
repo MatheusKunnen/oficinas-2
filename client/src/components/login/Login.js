@@ -8,7 +8,7 @@ import {
   Divider,
   useTheme,
   Typography,
-} from '@material-ui/core';
+} from '@mui/material';
 import getLoginStyle from '../../styles/getLoginStyle';
 import { login, clearLoginError } from '../../redux/actions/auth';
 import LoadingIndicator from '../layout/LoadingIndicator';

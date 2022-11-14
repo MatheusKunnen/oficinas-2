@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTheme } from '@material-ui/core';
+import { useTheme } from '@mui/material';
 import Url from '../../utils/Url';
 import Login from '../login/Login';
 import getLoginStyle from '../../styles/getLoginStyle';
