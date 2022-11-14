@@ -20,6 +20,7 @@ def set_should_open():
 
 @admin_state.main()
 def admin(ctx, goto):
+    global vault_id
     global should_increment
     global should_open
 
@@ -33,7 +34,8 @@ def admin(ctx, goto):
 
     if should_open:
         ctx.display_manager.write(f"Armario {vault_id} aberto")
-        ctx.lock_manager.toggle(vault)
+        ctx.lock_manager.toggle(vault_id)
+        ctx.display_manager.write(f"Armario {vault_id} (abrir/+)")
         should_open = False
 
 
