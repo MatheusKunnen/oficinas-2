@@ -36,7 +36,7 @@ export default class ParameterController {
   ): Promise<void> {
     if (req.hostname === 'localhost')
       res.status(200).json({ ...req.config.getConfigForLocker() });
-    else res.status(201).json({});
+    else res.status(400).json();
     return;
   }
 

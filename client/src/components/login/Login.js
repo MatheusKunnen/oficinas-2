@@ -67,9 +67,7 @@ const Login = ({
         borderRadius={2}
       >
         <Fragment>
-          <Typography className={style.loginTitle} fullWidth>
-            Login
-          </Typography>
+          <Typography className={style.loginTitle}>Login</Typography>
           <Divider />
         </Fragment>
 

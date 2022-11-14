@@ -8,6 +8,17 @@ const getLoginUrl = (host = defaultServerHost) => {
   return `${host}/user/login`;
 };
 
+const getParametersUrl = (host = defaultServerHost) => {
+  return `${host}/parameter`;
+};
+
+const getOcupationsInUseUrl = (host = defaultServerHost) => {
+  return `${host}/locker_ocupation/in_use`;
+};
+
+const getDescriptorImageUrl = (id, host = defaultServerHost) => {
+  return `${host}/client_descriptor/${id}/image`;
+};
 // Front-end
 const getLoginPageUrl = (appBase = defaultAppBase) => {
   return `${appBase}/login`;
@@ -21,4 +32,7 @@ module.exports = {
   getLoginUrl,
   getLoginPageUrl,
   getHomePageUrl,
+  getParametersUrl,
+  getOcupationsInUseUrl,
+  getDescriptorImageUrl,
 };

@@ -6,7 +6,6 @@ import Url from '../../utils/Url';
 
 const LoginWatcher = ({ token, loading, forceRedirect, ...props }) => {
   const history = useHistory();
-
   useEffect(() => {
     if (!loading && typeof token !== 'string')
       history.replace(Url.getLoginPageUrl());
