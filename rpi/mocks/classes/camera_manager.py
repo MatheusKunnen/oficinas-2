@@ -12,6 +12,6 @@ class CameraManager:
         sleep(1)
 
         if random() >= 0.7:
-            return dlib.vector([0.1 for _ in range(128)])
+            return (None, dlib.vector([0.1 for _ in range(128)]))
         else:
-            return None
+            return (None, None)

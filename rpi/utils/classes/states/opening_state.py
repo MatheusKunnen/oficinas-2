@@ -36,7 +36,7 @@ def opening_before_enter(ctx):
     ctx.button_manager.set_callback(0, lambda: set_keep_using(True))
     ctx.button_manager.set_callback(1, lambda: set_keep_using(False))
 
-    vault = ctx.vault_manager.get_vault(ctx.face)
+    vault = ctx.vault_manager.get_vault(ctx.face, ctx.image)
 
     if vault is None:
         ctx.display_manager.write("Armario cheio")
@@ -56,6 +56,8 @@ def opening_before_exit(ctx):
     global vault
 
     ctx.button_manager.reset()
+    ctx.face = None
+    ctx.image = None
 
     is_full = False
     keep_using = None
