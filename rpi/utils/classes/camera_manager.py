@@ -12,7 +12,7 @@ class CameraManager:
 
         self.detector = dlib.get_frontal_face_detector()
         self.predictor = dlib.shape_predictor(self.dlib_predictor_path)
-        self.facerec = dlib.face_recognizer_model_v1(
+        self.facerec = dlib.face_recognition_model_v1(
             self.dlib_face_recognizer_model_path
         )
         self.capture = cv2.VideoCapture(self.webcam_device_id)
