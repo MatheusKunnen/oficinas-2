@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import LockerOcupationDao from '../dao/LockerOcupationdao';
+import LockerOcupationDao from '../dao/LockerOcupationDao';
 import LockerOcupationDescriptorDao from '../dao/LockerOcupationDescriptorDao';
 import ErrorResponse from '../error/ErrorResponse';
 
