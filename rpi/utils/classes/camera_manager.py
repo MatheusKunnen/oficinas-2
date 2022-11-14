@@ -29,4 +29,4 @@ class CameraManager:
         detection = max(detections, key=lambda det: det.area())
         shape = self.predictor(gray, detection)
 
-        return self.facerec.compute_face_descriptor(gray, shape)
+        return (image, self.facerec.compute_face_descriptor(gray, shape))

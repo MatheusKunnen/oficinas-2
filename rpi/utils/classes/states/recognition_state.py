@@ -6,7 +6,7 @@ recognition_state = StateMachine.State("recognition")
 
 @recognition_state.main()
 def recognition(ctx, goto):
-    ctx.face = ctx.camera_manager.detect_face()
+    (ctx.image, ctx.face) = ctx.camera_manager.detect_face()
 
     if ctx.face is not None:
         goto("opening")

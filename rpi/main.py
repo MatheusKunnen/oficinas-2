@@ -4,19 +4,20 @@ import sys
 
 try:
     import RPi.GPIO as gpio
+    from utils.classes.button_manager import ButtonManager
     from utils.classes.display_manager import DisplayManager
     from utils.classes.camera_manager import CameraManager
-    from utils.classes.vault_manager import VaultManager
-    from utils.classes.configuration_manager import ConfigurationManager
+    from utils.classes.api_manager import ApiManager
 except:
     import Mock.GPIO as gpio
+    from mocks.classes.button_manager import ButtonManager
     from mocks.classes.display_manager import DisplayManager
     from mocks.classes.camera_manager import CameraManager
-    from mocks.classes.vault_manager import VaultManager
-    from mocks.classes.configuration_manager import ConfigurationManager
+    from mocks.classes.api_manager import ApiManager
 
+from utils.classes.configuration_manager import ConfigurationManager
 from utils.classes.lock_manager import LockManager
-from utils.classes.button_manager import ButtonManager
+from utils.classes.vault_manager import VaultManager
 from utils.classes.context import Context
 from utils.classes.state_machine import StateMachine
 
@@ -27,12 +28,13 @@ from utils.classes.states import (
     admin_state,
 )
 
-configuration_manager = ConfigurationManager()
+api_manager = ApiManager()
+configuration_manager = ConfigurationManager(api_manager)
 lock_manager = LockManager(configuration_manager)
 display_manager = DisplayManager()
 button_manager = ButtonManager(configuration_manager)
 camera_manager = CameraManager(configuration_manager)
-vault_manager = VaultManager()
+vault_manager = VaultManager(api_manager, configuration_manager)
 
 state_machine = StateMachine(
     Context(
@@ -41,6 +43,7 @@ state_machine = StateMachine(
         button_manager,
         camera_manager,
         vault_manager,
+        api_manager,
         configuration_manager,
     )
 )
@@ -61,7 +64,7 @@ def setup():
     lock_manager.setup()
     button_manager.setup()
     vault_manager.setup()
-    state_machine.goto("recognition")
+    state_machine.goto("starting")
     time.sleep(0.5)
 
     signal.signal(signal.SIGINT, sigint_handler)
