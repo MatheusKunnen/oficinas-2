@@ -11,7 +11,7 @@ export const login = (usuario, password) => async (dispatch, getState) => {
   dispatch({ type: ON_LOGIN, payload: null });
   try {
     const url = Url.getLoginUrl();
-    console.log(url);
+    url;
     const res = await fetch(url, {
       method: 'POST',
       body: JSON.stringify({
