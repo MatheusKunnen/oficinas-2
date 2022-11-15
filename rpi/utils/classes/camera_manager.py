@@ -16,13 +16,16 @@ class CameraManager:
         self.facerec = dlib.face_recognition_model_v1(
             self.dlib_face_recognizer_model_path
         )
-        self.capture = None
+        self.capture = cv2.VideoCapture(self.webcam_device_id)
         # self.capture.set(cv2.CAP_PROP_BUFFERSIZE, 1) # Nao compativel com a versao da rpi
 
     def detect_face(self):
-        self.capture = cv2.VideoCapture(self.webcam_device_id)
+        # Consome buffer da camera para obter frame novo
+        for _ in range(5):
+            self.capture.read()
         _, image = self.capture.read()
-        gray = image  # cv2.cvtColor(image, cv2, cv2.COLOR_BGR2GRAY)
+        # cv2.cvtColor(image, cv2.COLOR_BGR2GRAY) # Nao compativel
+        gray = image
 
         detections = self.detector(gray, 1)
 
@@ -31,7 +34,5 @@ class CameraManager:
 
         detection = max(detections, key=lambda det: det.area())
         shape = self.predictor(gray, detection)
-
-        self.capture.release()
 
         return (image, self.facerec.compute_face_descriptor(gray, shape))

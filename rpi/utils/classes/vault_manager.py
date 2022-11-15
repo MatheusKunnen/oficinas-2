@@ -32,9 +32,7 @@ class VaultManager:
         return len([i for i in self.vaults if i is not None]) == len(self.vaults)
 
     def is_descriptor_similar(self, d1, d2):
-        # print(d1, d2)
         d = np.linalg.norm(np.asarray(d1) - np.asarray(d2))
-        print(d)
         return d < self.configuration_manager.get("similarity_threshold")
 
     def get_vault(self, descriptor, image):

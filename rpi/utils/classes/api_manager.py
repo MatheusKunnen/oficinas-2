@@ -32,7 +32,6 @@ class ApiManager:
         if entries["data"] is None:
             return []
         for entry in entries["data"]:
-            print(entry)
             entry["descriptor"] = self.get_client_descriptor(
                 entry["main_descriptor"])
 

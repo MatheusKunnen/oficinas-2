@@ -9,7 +9,6 @@ vault = None
 
 
 def set_keep_using(value):
-    print("here", value)
     global keep_using
     keep_using = value
 

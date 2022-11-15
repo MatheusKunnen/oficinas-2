@@ -8,7 +8,7 @@ should_continue = False
 def set_should_continue(channel):
     global should_continue
     should_continue = True
-    print("here")
+
 
 @starting_state.main()
 def starting(ctx, goto):
