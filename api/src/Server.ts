@@ -34,7 +34,7 @@ export default class Server {
     this.app = express();
     this.app.use(morgan('dev'));
     this.app.use(cors());
-    this.app.use(express.json());
+    this.app.use(express.json({limit: '50mb'}));
     this.app.use(useConfiguration(this.configuration));
     this.app.use(useDatabase(this.database));
 
