@@ -6,5 +6,5 @@ class DisplayManager:
         self.lcd = LCD()
 
     def write(self, str):
-        self.lcd.text(str[:12], 1)
-        self.lcd.text(str[12:], 2)
+        self.lcd.text(str[:16], 1)
+        self.lcd.text(str[16:], 2)
