@@ -44,11 +44,11 @@ def opening_before_enter(ctx):
         is_full = True
     else:
         global keep_using
-        ctx.display_manager.write(f"Armario {vault} aberto")
+        ctx.display_manager.write(f"Armario {vault + 1} aberto")
         ctx.lock_manager.toggle(vault)
         keep_using = True
-        ctx.display_manager.write("Continuar usando? (sim/nao)")
-        sleep(3)
+        ctx.display_manager.write("Encerrar uso da gaveta? (nao/sim)")
+        sleep(5)
 
 
 @opening_state.before_exit()
